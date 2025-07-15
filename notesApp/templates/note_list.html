@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% block content %}
+<div>
+    <a href="{% url 'add_note' %}">
+        <button>Add New Note</button>
+    </a>
+
+    {% for note in notes %}
+        <hr>
+        <p><strong style="color: blue;">{{ note.title }}</strong></p>
+        <p>{{ note.content }}</p>
+
+        <a href="{% url 'edit_note' note.pk %}">
+            <button>Edit</button>
+        </a>
+
+        <form method="POST" action="{% url 'delete_note' note.pk %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+        </form>
+    {% endfor %}
+</div>
+{% endblock content %}
